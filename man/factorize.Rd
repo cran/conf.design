@@ -1,5 +1,7 @@
 \name{factorize}
 \alias{factorize}
+\alias{factorize.default}
+\alias{factorize.factor}
 \title{
 Generic function.
 }
@@ -14,24 +16,22 @@ that f is model equivalent to join(fa, fb, \dots{}).
 factorize(x, \dots)
 }
 \arguments{
-\item{x}{
-Principal argument.  At this stage, it may be a numeric vector to elicit
-the default method, or a factor to elicit the factor method.
+  \item{x}{Principal argument.  At this stage, it may be a numeric
+    vector to elicit the default method, or a factor to elicit the
+    factor method.}
+  \item{...}{Additional arguments, if any.}
 }
-\item{...}{
-Additional arguments, if any.
-}}
 \value{
-A vector of (numeric) factors for numeric arguments, or a design with
-(S-PLUS) factors with prime numbers of levels for factor arguments.
+  A vector of (numeric) factors for numeric arguments, or a design with
+  (S-PLUS) factors with prime numbers of levels for factor arguments.
 }
 \section{Side Effects}{
-None.
+  None.
 }
 \details{
-Factorizes by a clumsy though effective enough way for small integers.
-May become very slow if some prime factors are large.  For the factor
-method it generates pseudo factors in the usual way.
+  Factorizes by a clumsy though effective enough way for small integers.
+  May become very slow if some prime factors are large.  For the factor
+  method it generates pseudo factors in the usual way.
 }
 \seealso{
 conf.design, join
@@ -44,5 +44,3 @@ conf.design, join
 }
 \keyword{design}
 % Converted by Sd2Rd version 1.10.
-
-

@@ -1,8 +1,9 @@
 Package: conf.design
-Version: 0.0.1
-Date: 5/09/2000
+Version: 0.0-2
+Date: 2001-06-08
 Title: Construction of factorial designs
-Author:  Bill Venables <venables@stats.adelaide.edu.au>
+Author: Bill Venables <Bill.Venables@CMIS.CSIRO.AU>
+Maintainer: Bill Venables <Bill.Venables@CMIS.CSIRO.AU>
 Description: This small library contains a series of simple tools for
 	constructing and manipulating confounded and fractional
 	factorial designs. To some extent these complement those
