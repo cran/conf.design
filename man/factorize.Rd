@@ -19,7 +19,7 @@ factorize(x, \dots)
   \item{x}{Principal argument.  At this stage, it may be a numeric
     vector to elicit the default method, or a factor to elicit the
     factor method.}
-  \item{...}{Additional arguments, if any.}
+  \item{\dots}{Additional arguments, if any.}
 }
 \value{
   A vector of (numeric) factors for numeric arguments, or a design with

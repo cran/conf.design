@@ -54,7 +54,7 @@ conf.set <- function(G, p) {
       m <- 0
       for(j in 1:ncol(M))
         m <- p * m + M[, j]
-      M[!duplicated(m),  , drop = F]
+      M[!duplicated(m),  , drop = FALSE]
     }
   S <- space(G, p)
   S[apply(S, 1, function(x)
@@ -80,28 +80,30 @@ direct.sum <- function(D1, D2, ..., tiebreak = letters) {
 factorize <- function(x, ...)
   UseMethod("factorize")
 
-factorize.default <- function (n) {
-  if (!is.numeric(n)) 
+factorize.default <- function (x, ...) {
+  if (!is.numeric(x)) 
     stop("cannot factorize non-numeric arguments")
-  if (length(n) > 1) {
+  if (length(x) > 1) {
     l <- list()
-    for (i in seq(along = n))
-      l[[i]] <- Recall(n[i])
+    for (i in seq(along = x))
+      l[[i]] <- Recall(x[i])
     return(l)
   }
-  if (n != round(n) || n < 2) 
-    return(n)
-  tab <- primes(n)
+  if (x != round(x) || x < 2) 
+    return(x)
+  tab <- primes(x)
   fac <- numeric(0)
-  while(length(tab <- tab[n %% tab == 0]) > 0) {
-    n <- n/prod(tab)
+  while(length(tab <- tab[x %% tab == 0]) > 0) {
+    x <- x/prod(tab)
     fac <- c(fac, tab)
   }
   sort(fac)
 }
 
-factorize.factor <- function(x, name = deparse(substitute(x)),
-                             extension = letters, drop = T, sep = "") {
+factorize.factor <-
+function(x, name = deparse(substitute(x)), extension = letters,
+         drop = TRUE, sep = "", ...)
+{
   llev <- factorize.default(length(levels(x)))
   if(length(llev) == 1)
     return(if(drop) x else {
