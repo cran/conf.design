@@ -1,0 +1,14 @@
+conf.design - Construct a single replicate symmetric factorial design.
+
+conf.set - For a set of defining contrasts of a confounding scheme.
+
+direct.sum - Constructs the direct sum of two or more designs.
+
+join - Combine two or more factors into a single factor defining the subclasses.
+
+rjoin - join two or more designs into a single design by row concatenation.
+
+
+factorize - Generic function.  The "default" method factorizes positive numeric integer arguments, returning a vector of prime factors.
+
+primes - Generate all prime numbers less than its (scalar) argument, n.
