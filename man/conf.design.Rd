@@ -7,7 +7,7 @@ Construct symmetric confounded factorial designs.
 Construct designs with specified treatment contrasts confounded with blocks.
 }
 \usage{
-conf.design(G, p, block.name="Blocks", treatment.names=<<see below>>)
+conf.design(G, p, block.name="Blocks", treatment.names=)
 }
 \arguments{
 \item{G}{
