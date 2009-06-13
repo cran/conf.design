@@ -1,15 +1,15 @@
 Package: conf.design
-Version: 0.0-4
-Date: 2005-04-08
+Type: Package
 Title: Construction of factorial designs
-Author: Bill Venables <Bill.Venables@CMIS.CSIRO.AU>
-Maintainer: Bill Venables <Bill.Venables@CMIS.CSIRO.AU>
+Version: 1.0
+Date: 2009-06-13
+Author: Bill Venables
+Maintainer: Bill Venables <Bill.Venables@gmail.com>
 Description: This small library contains a series of simple tools for
-	constructing and manipulating confounded and fractional
-	factorial designs. To some extent these complement those
-	already available in S-PLUS 3.1 and 3.2, (but they 
-	may well be rendered obsolete by S+DOX, to which the author
-	does not yet have access).
-License: This software may be re-distributed freely and used for
-	any non-commercial purpose.
-Packaged: Fri Apr  8 12:40:48 2005; hornik
+        constructing and manipulating confounded and fractional
+        factorial designs.
+License: file LICENSE
+LazyLoad: yes
+Packaged: 2009-06-14 04:43:27 UTC; owner
+Repository: CRAN
+Date/Publication: 2009-06-17 13:04:42

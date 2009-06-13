@@ -1,0 +1,178 @@
+		    Construction of factorial designs.
+
+1. INTRODUCTION
+
+This small library contains a series of simple tools for constructing and
+manipulating confounded and fractional factorial designs.
+
+The term `design' is used in the Design of Experiments sense, and is always
+represented by an R "design", that is a list object of class "design"
+inheriting from class "data.frame".
+
+2. SUMMARY OF FUNCTIONS SUPPLIED
+
+conf.design - Construct a single replicate symmetric factorial design.
+    The user supplies a matrix, D, whose rows definine the effects to be
+    confounded in exactly the way as in Collings (1989).  The result is a
+    design with the first column a factor defining the blocks of the
+    experiment and the next ncol(D) columns the treatment factors.
+
+conf.set - For a set of defining contrasts of a confounding scheme,
+    constructs a minimal set of confounded effects.  Effects are specified
+    as for conf.design and the result is returned the same way.  Intended
+    to be used to check if a low order interaction has accidently been
+    confounded.
+
+direct.sum - Constructs the direct sum of two or more designs.  Each plot
+    of one design is matched with every plot of the other.  (This might
+    also be called the Cartesian product of two designs).
+
+join - Combine two or more factors into a single factor defining the sub-
+    classes.  The level names are concatenated.  If f1 and f2 are factors,
+    join(f1, f2) is equivalent to the term f1:f2 in a model formula.
+
+rjoin - join two or more designs into a single design by row concatenation,
+    similar to `rbind'.  The component designs must have identical names.
+    An additional factor is also generated in the result that identifies
+    the individual components.
+
+factorize - Generic function.  The "default" method factorizes positive
+    numeric integer arguments, returning a vector of prime factors.  The
+    "factor" method can be used to generate pseudo-factors.  It accepts a
+    factor, f, as principal argument and returns a design with factors fa,
+    fb, ... each with a prime number of levels such that in a model formula
+    f is equivalent to join(fa, fb, ...).  (Like the opposite of join().)
+
+primes - Generate all prime numbers less than its (scalar) argument, n.
+    Uses a naive sieve method.
+
+4. REFERENCE: 
+
+Collings, B. J. (1989) Quick confounding.  Technometrics, v31, pp107-110.
+
+5. INSTALLATION:
+
+Expand and use the standard R installation method
+
+	R INSTALL conf.design
+
+6. EXAMPLES.
+
+6.1 Generate a single replicate 3^4 design with factors A, B, C and D,
+    with effects A B^2 D and A B C confounded with blocks.  The design will
+    have 9 blocks of size 9:
+
+> D <- rbind(c(1,2,0,1), c(1,1,1,0))
+> dimnames(D) <- list(NULL, LETTERS[1:4])
+> cfd <- conf.design(D, 3)
+> names(cfd)
+[1] "Blocks" "A"      "B"      "C"      "D"     
+> levels(cfd$Blocks)
+[1] "00" "01" "02" "10" "11" "12" "20" "21" "22"
+
+    In addition to the factors a block design is generated with levels
+    indicating how the block is generated in the confounding scheme.  This
+    allows individidual fractions of the design to be easily extracted.
+
+    We can also identify which other effects are confounded with blocks:
+
+> conf.set(D, 3)
+     A B C D 
+[1,] 1 2 0 1
+[2,] 1 1 1 0
+[3,] 0 1 2 1
+[4,] 1 0 2 2
+
+    i.e., from the last two rows, B C^2 D and A C^2 D^2 are also
+    confounded. 
+
+6.2 Generate a half replicate of a 2^3 x 3^2 experiment.  The factors are
+    to be A, B, C, D, E.  The fractional relation is to be I = ABC and the
+    DE effect is to be confounded with blocks.
+
+    First construct the 2^3 design, confounded in two blocks:
+> d1 <- conf.design(c(1,1,1), p=2, treatment.names=LETTERS[1:3])
+
+    Next the 3^2 design, with DE confounded in blocks:
+> d2 <- conf.design(c(1,1), p=3, treatment.names=LETTERS[4:5])
+
+    Now extract the principal block from the 2^3 design and form the direct
+    sum withthe 3^2 design
+> dsn <- direct.sum(d1[d1$Blocks=="0",], d2)
+
+    Now to do some checks.
+> nrow(dsn)
+[1] 36
+> names(dsn)
+[1] "Blocks"  "A"       "B"       "C"       "Blocksa" "D"       "E"      
+
+    The two factors "Blocks" and "Blocksa" together define the blocks. 
+    Amalgamate them into a single Blocks factor and prune:
+> dsn$Blocks <- join(dsn$Blocks, dsn$Blocksa)
+> dsn$Blocksa <- NULL
+
+    We can check the confounding by analysing some dummy data:
+
+> y <- rnorm(36)
+> fm <- aov(y ~ A*B*C*D*E + Error(Blocks), data=dsn)
+> summary(fm)
+Error: Blocks 
+    Df Sum of Sq Mean Sq 
+D:E  2    4.6499   2.325
+
+Error: Within 
+      Df Sum of Sq Mean Sq 
+A      1     0.442  0.4418
+B      1     0.035  0.0350
+C      1     1.976  1.9759
+D      2     3.182  1.5909
+E      2     2.320  1.1598
+A:D    2     3.873  1.9365
+B:D    2     0.982  0.4912
+C:D    2     1.155  0.5775
+A:E    2     2.982  1.4908
+B:E    2     0.415  0.2077
+C:E    2    11.132  5.5660
+D:E    2     0.378  0.1892
+A:D:E  4     8.581  2.1453
+B:D:E  4     7.079  1.7698
+C:D:E  4     7.647  1.9116
+> 
+    As required, DE is totally confounded with Blocks and only the main
+    effects, A, B, and C, and their interactions with D and E are estimable
+    within blocks.
+
+6.3 Construct a 3 replicate design for a 2^3 experiment using 6 blocks of
+    size 4, partially confounding the effects ABC, AB and AC.
+
+> d1 <- conf.design(c(1,1,1), 2, treatment.names=c("A","B","C"))
+> d2 <- conf.design(c(1,1,0), 2, treatment.names=c("A","B","C"))
+> d3 <- conf.design(c(1,0,1), 2, treatment.names=c("A","B","C"))
+> d123 <- rjoin(d1,d2,d3)
+> names(d123)
+[1] "Part"   "Blocks" "A"      "B"      "C"     
+> d123$Blocks <- join(d123$Part, d123$Blocks)
+
+    The last step makes "Blocks" into a factor with 6 rather than 2 levels.
+
+7. RE-DISTRIBUTION STATEMENT:
+
+This software may be re-distributed freely and used for any non-commercial
+purpose.
+
+8. DISCLAIMER:
+
+The author accepts no responsibility for the correctness or usability of
+the results of this software.  All results should be checked by a dummy
+analysis.
+
+9. FOLLOWUP ASSISTANCE:
+
+	Unlikely...
+
+-----------------------------------------------------------------
+Bill Venables,      Statistician,     CMIS Environmetrics Project
+CSIRO Marine Labs, PO Box 120, Cleveland, Qld,  AUSTRALIA.   4163
+Tel: +61 7 3826 7251           Email: Bill.Venables@cmis.csiro.au    
+Fax: +61 7 3826 7304      http://www.cmis.csiro.au/bill.venables/
+
