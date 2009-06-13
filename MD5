@@ -1,0 +1,13 @@
+1a9e2daa85292288faa274ebc53d8b04 *DESCRIPTION
+781c95f8cab878e09f59800eecdc5f56 *LICENSE
+9fdfeb11f7ddba6f3aab9aaa6b1ac5dd *NAMESPACE
+d6471cc10e0d60f95d5404883c698bb5 *R/conf.design.R
+92a0844337cf83f6cefc55ccbc095766 *inst/doc/README.design
+92a0844337cf83f6cefc55ccbc095766 *inst/doc/conf_design.txt
+99d77504d082f59f213e2a2a25409797 *man/conf.design.Rd
+558609835aac69f4d40f512b913f71b0 *man/conf.set.Rd
+ac13e104ce39a97ca08097da034619ef *man/direct.sum.Rd
+775556a6f073d1e3217039cd1e72a1f1 *man/factorize.Rd
+399262bec9cfa91b75e85a16d4641247 *man/join.Rd
+5e18c336f19e1cde1ad49538d077246e *man/primes.Rd
+7d0fa8de0103a13694c6759277111511 *man/rjoin.Rd

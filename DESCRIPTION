@@ -1,7 +1,7 @@
 Package: conf.design
 Type: Package
 Title: Construction of factorial designs
-Version: 1.0
+Version: 1.01
 Date: 2009-06-13
 Author: Bill Venables
 Maintainer: Bill Venables <Bill.Venables@gmail.com>
@@ -10,6 +10,6 @@ Description: This small library contains a series of simple tools for
         factorial designs.
 License: file LICENSE
 LazyLoad: yes
-Packaged: 2009-06-14 04:43:27 UTC; owner
 Repository: CRAN
-Date/Publication: 2009-06-17 13:04:42
+Date/Publication: 2012-10-29 08:58:28
+Packaged: 2012-10-29 08:58:28 UTC; ripley

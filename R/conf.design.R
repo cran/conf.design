@@ -160,7 +160,7 @@ primes <- function(n) {
   M <- floor(sqrt(M2))
   while((p <- p + 1) <= M)
     if(x[p] != 0)
-      x[seq(p^2, n, p)] <- 0
+      x[seq(p^2, M2, p)] <- 0
   x[x > 0]
 }
 
